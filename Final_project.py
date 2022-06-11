@@ -196,10 +196,10 @@ if st.session_state.sidebar == 'Home':
         ## Upload sample voice
 
         # Change the current working directory
-        os.chdir('E:/Finalproject')
+        #os.chdir('E:/Finalproject')
 
-        cur = os.getcwd()
-        voice_1 = os.path.join(cur, 'SampleVoice_ggtranslate.wav')
+        #cur = os.getcwd()
+        voice_1 = os.path.join('SampleVoice_ggtranslate.wav')
 
 
         g = audio_to_numpy(voice_1)
@@ -210,7 +210,7 @@ if st.session_state.sidebar == 'Home':
 
 
 
-        voice_2 = os.path.join(cur, 'SampleVoice_kha.wav')
+        voice_2 = os.path.join('SampleVoice_kha.wav')
 
         k = audio_to_numpy(voice_2)
         my_embeddings2 = np.squeeze(
