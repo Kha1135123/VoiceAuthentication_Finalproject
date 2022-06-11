@@ -67,13 +67,13 @@ with st.sidebar:
 
     if rate == 'awful' or rate == 'bad' or rate =='okay':    
         title = st.text_input('Feedback', '')
-        if title is not '':
+        if title != '':
             time.sleep(3)
             st.write('Thank you for your feedback!')
 
     if rate =='good' or rate=='great':
         txt = st.text_input('Feedback', '')
-        if txt is not '':
+        if txt != '':
             time.sleep(3)
             st.write('Thank you for your support!')            
 
