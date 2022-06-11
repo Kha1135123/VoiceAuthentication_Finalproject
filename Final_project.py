@@ -116,7 +116,7 @@ if st.session_state.sidebar == 'Home':
     # st.write("Current working directory: {0}".format(os.getcwd()))
 
     ## Change the current working directory
-    os.chdir('C:/Users/Administrator/Downloads')
+    #os.chdir('C:/Users/Administrator/Downloads')
     # E:/Finalproject
 
     # Print the current working directory
