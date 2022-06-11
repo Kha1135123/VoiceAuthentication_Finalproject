@@ -160,9 +160,8 @@ if st.session_state.sidebar == 'Home':
         
         st.write("#")
 
-        cwd = os.getcwd()
-        audio_file = os.path.join('C:', os.sep, 'Users', 'Administrator', 'Downloads', uploaded_file.name)       
-        spoken = asr_model.transcribe_file(audio_file)    
+               
+        spoken = asr_model.transcribe_file(uploaded_file.name)    
         
         with st.spinner('Processing...'):
              time.sleep(3)
