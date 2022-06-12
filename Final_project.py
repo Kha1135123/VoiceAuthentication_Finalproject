@@ -87,9 +87,6 @@ add_selectbox = st.sidebar.selectbox(
 with st.sidebar:
     st.write('##')
     st.write('##')
-    st.write('##')
-    st.write('##')    
-    st.write('##')    
     st.write('##')    
 
     ## Rating
