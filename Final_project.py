@@ -217,8 +217,8 @@ if st.session_state.sidebar == 'Home':
         target_embed = my_embeddings
         labels, distances = p.knn_query(target_embed, k = 2)
 
-        #st.write(labels)
-        #st.write(distances)
+        st.sidebar.write(labels)
+        st.sidebar.write(distances)
 
 
         target_embed = my_embeddings
