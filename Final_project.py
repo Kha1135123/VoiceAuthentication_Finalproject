@@ -49,6 +49,34 @@ def audio_to_numpy(filenames):
     return x       
 
 
+
+def save_audio(file):
+    if file.size > 4000000:
+        return 1
+    # if not os.path.exists("audio"):
+    #     os.makedirs("audio")
+    folder = "audio"
+    datetoday = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    # clear the folder to avoid storage overload
+    for filename in os.listdir(folder):
+        file_path = os.path.join(folder, filename)
+        try:
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                os.unlink(file_path)
+        except Exception as e:
+            print('Failed to delete %s. Reason: %s' % (file_path, e))
+    try:
+        with open("log0.txt", "a") as f:
+            f.write(f"{file.name} - {file.size} - {datetoday};\n")
+    except:
+        pass
+
+    with open(os.path.join(folder, file.name), "wb") as f:
+        f.write(file.getbuffer())
+    return 0
+
+
+
 ###CREATING SIDEBAR
 # Using object notation
 add_selectbox = st.sidebar.selectbox(
@@ -127,7 +155,7 @@ if st.session_state.sidebar == 'Home':
         if not os.path.exists("audio"):
             os.makedirs("audio")
         path = os.path.join("audio", uploaded_file.name)
-        #if_save_audio = save_audio(uploaded_file)
+        if_save_audio = save_audio(uploaded_file)
 
         spoken = asr_model.transcribe_file(path)           
         with st.spinner('Processing...'):
