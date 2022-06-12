@@ -40,53 +40,6 @@ secondaryBackgroundColor =  "#EBD2B9" # wheat
 textColor = "#5D6169" # grey
 
 
-def audiorec_demo_app():
-
-    parent_dir = os.path.dirname(os.path.abspath(__file__))
-    # Custom REACT-based component for recording client audio in browser
-    build_dir = os.path.join(parent_dir, "st_audiorec/frontend/build")
-    # specify directory and initialize st_audiorec object functionality
-    st_audiorec = components.declare_component("st_audiorec", path=build_dir)
-
-    # TITLE and Creator information
-    st.title('Voice password')
-    st.markdown('Audio recorder implemented by '
-        '[Stefan Rummer](https://www.linkedin.com/in/stefanrmmr/) - '
-        'view project source code on '
-        '[GitHub](https://github.com/stefanrmmr/streamlit_audio_recorder)')
-    st.write('\n\n')
-
-    # STREAMLIT AUDIO RECORDER Instance
-    st_audiorec()
-
-
-def save_audio(file):
-    if file.size > 4000000:
-        return 1
-    # if not os.path.exists("audio"):
-    #     os.makedirs("audio")
-    folder = "audio"
-    datetoday = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-    # clear the folder to avoid storage overload
-    for filename in os.listdir(folder):
-        file_path = os.path.join(folder, filename)
-        try:
-            if os.path.isfile(file_path) or os.path.islink(file_path):
-                os.unlink(file_path)
-        except Exception as e:
-            print('Failed to delete %s. Reason: %s' % (file_path, e))
-    try:
-        with open("log0.txt", "a") as f:
-            f.write(f"{file.name} - {file.size} - {datetoday};\n")
-    except:
-        pass
-
-    with open(os.path.join(folder, file.name), "wb") as f:
-        f.write(file.getbuffer())
-    return 0
-
-
-
 def audio_to_numpy(filenames):
     x, sr = librosa.load(filenames, sr=30000)
     if x.shape[0] <= 30000:    
@@ -94,46 +47,6 @@ def audio_to_numpy(filenames):
         if len(q.shape) == 1:
             x = x[..., None]
     return x       
-
-
-## Load pretrained model
-
-verifier = SpeakerRecognition.from_hparams(source="speechbrain/spkrec-ecapa-voxceleb", run_opts={"device":"cpu"})
-
-asr_model = EncoderDecoderASR.from_hparams(source="speechbrain/asr-transformer-transformerlm-librispeech", 
-                                            savedir="pretrained_models/asr-transformer-transformerlm-librispeech",  
-                                            run_opts={"device":"cpu"})
-
-
-## Upload sample voice
-
-voice_1 = os.path.join('An.wav')
-g = audio_to_numpy(voice_1)
-my_embeddings1 = np.squeeze(
-      verifier.encode_batch(torch.tensor(g)).detach().cpu().numpy())
-#st.write(my_embeddings1.shape)
-#st.write(g.shape)
-
-
-voice_2 = os.path.join('SampleVoice_kha.wav')
-k = audio_to_numpy(voice_2)
-my_embeddings2 = np.squeeze(
-     verifier.encode_batch(torch.tensor(k)).detach().cpu().numpy())
-#st.write(my_embeddings2.shape)
-#st.write(k.shape)
-
-
-voice_3 = os.path.join('Tan.wav')
-m = audio_to_numpy(voice_3)
-my_embeddings3 = np.squeeze(
-     verifier.encode_batch(torch.tensor(m)).detach().cpu().numpy())
-
-
-voice_4 = os.path.join('Phu.wav')
-n = audio_to_numpy(voice_4)
-my_embeddings4 = np.squeeze(
-     verifier.encode_batch(torch.tensor(n)).detach().cpu().numpy())
-
 
 
 ###CREATING SIDEBAR
@@ -171,6 +84,25 @@ with st.sidebar:
 
 if st.session_state.sidebar == 'Home':
 
+    def audiorec_demo_app():
+
+        parent_dir = os.path.dirname(os.path.abspath(__file__))
+        # Custom REACT-based component for recording client audio in browser
+        build_dir = os.path.join(parent_dir, "st_audiorec/frontend/build")
+        # specify directory and initialize st_audiorec object functionality
+        st_audiorec = components.declare_component("st_audiorec", path=build_dir)
+
+        # TITLE and Creator information
+        st.title('Voice password')
+        st.markdown('Audio recorder implemented by '
+            '[Stefan Rummer](https://www.linkedin.com/in/stefanrmmr/) - '
+            'view project source code on '
+            '[GitHub](https://github.com/stefanrmmr/streamlit_audio_recorder)')
+        st.write('\n\n')
+
+        # STREAMLIT AUDIO RECORDER Instance
+        st_audiorec()
+
     if __name__ == '__main__':
 
         # call main function
@@ -207,7 +139,33 @@ if st.session_state.sidebar == 'Home':
         
     
         ### SPEAKER RECOGNITION
+        ## Load pretrained model
         verifier = SpeakerRecognition.from_hparams(source="speechbrain/spkrec-ecapa-voxceleb", run_opts={"device":"cpu"})
+
+        ## Upload sample voice
+        voice_1 = os.path.join('An.wav')
+        g = audio_to_numpy(voice_1)
+        my_embeddings1 = np.squeeze(
+              verifier.encode_batch(torch.tensor(g)).detach().cpu().numpy())
+        #st.write(my_embeddings1.shape)
+        #st.write(g.shape)
+
+        voice_2 = os.path.join('SampleVoice_kha.wav')
+        k = audio_to_numpy(voice_2)
+        my_embeddings2 = np.squeeze(
+             verifier.encode_batch(torch.tensor(k)).detach().cpu().numpy())
+        #st.write(my_embeddings2.shape)
+        #st.write(k.shape)
+
+        voice_3 = os.path.join('Tan.wav')
+        m = audio_to_numpy(voice_3)
+        my_embeddings3 = np.squeeze(
+             verifier.encode_batch(torch.tensor(m)).detach().cpu().numpy())
+
+        voice_4 = os.path.join('Phu.wav')
+        n = audio_to_numpy(voice_4)
+        my_embeddings4 = np.squeeze(
+             verifier.encode_batch(torch.tensor(n)).detach().cpu().numpy())
 
 
         q = audio_to_numpy(path)
