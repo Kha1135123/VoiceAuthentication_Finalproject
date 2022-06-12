@@ -98,7 +98,7 @@ def audio_to_numpy(filenames):
 
 ## Upload sample voice
 
-voice_1 = os.path.join(cur, 'An.wav')
+voice_1 = os.path.join('An.wav')
 g = audio_to_numpy(voice_1)
 my_embeddings1 = np.squeeze(
       verifier.encode_batch(torch.tensor(g)).detach().cpu().numpy())
@@ -106,7 +106,7 @@ my_embeddings1 = np.squeeze(
 #st.write(g.shape)
 
 
-voice_2 = os.path.join(cur, 'SampleVoice_kha.wav')
+voice_2 = os.path.join('SampleVoice_kha.wav')
 k = audio_to_numpy(voice_2)
 my_embeddings2 = np.squeeze(
      verifier.encode_batch(torch.tensor(k)).detach().cpu().numpy())
@@ -114,13 +114,13 @@ my_embeddings2 = np.squeeze(
 #st.write(k.shape)
 
 
-voice_3 = os.path.join(cur, 'Tan.wav')
+voice_3 = os.path.join('Tan.wav')
 m = audio_to_numpy(voice_3)
 my_embeddings3 = np.squeeze(
      verifier.encode_batch(torch.tensor(m)).detach().cpu().numpy())
 
 
-voice_4 = os.path.join(cur, 'Phu.wav')
+voice_4 = os.path.join('Phu.wav')
 n = audio_to_numpy(voice_4)
 my_embeddings4 = np.squeeze(
      verifier.encode_batch(torch.tensor(n)).detach().cpu().numpy())
