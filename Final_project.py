@@ -39,9 +39,41 @@ secondaryBackgroundColor =  "#EBD2B9" # wheat
 textColor = "#5D6169" # grey
 
 
+def save_audio(file):
+    if file.size > 4000000:
+        return 1
+    # if not os.path.exists("audio"):
+    #     os.makedirs("audio")
+    folder = "audio"
+    datetoday = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    # clear the folder to avoid storage overload
+    for filename in os.listdir(folder):
+        file_path = os.path.join(folder, filename)
+        try:
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                os.unlink(file_path)
+        except Exception as e:
+            print('Failed to delete %s. Reason: %s' % (file_path, e))
+
+    try:
+        with open("log0.txt", "a") as f:
+            f.write(f"{file.name} - {file.size} - {datetoday};\n")
+    except:
+        pass
+
+    with open(os.path.join(folder, file.name), "wb") as f:
+        f.write(file.getbuffer())
+    return 0
 
 
 
+def audio_to_numpy(filenames):
+    x, sr = librosa.load(filenames, sr=30000)
+    if x.shape[0] <= 30000:    
+        x = np.pad(x, (0, 30000-x.shape[0]), 'constant', constant_values=(0, 0))
+        if len(q.shape) == 1:
+            x = x[..., None]
+    return x       
 
 
 
@@ -129,40 +161,23 @@ if st.session_state.sidebar == 'Home':
     uploaded_file = st.file_uploader("Choose a file")
     #st.write("Filename:", uploaded_file.name)
 
-
-    def audio_to_numpy(filenames):
-        x, sr = librosa.load(filenames, sr=30000)
-        if x.shape[0] <= 30000:    
-            x = np.pad(x, (0, 30000-x.shape[0]), 'constant', constant_values=(0, 0))
-            if len(q.shape) == 1:
-                x = x[..., None]
-        return x       
-
-
     if uploaded_file is not None:
-
 
         ### SPEECH_TO_TEXT
         ## Upload pretrained model
 
-
-
         asr_model = EncoderDecoderASR.from_hparams(source="speechbrain/asr-transformer-transformerlm-librispeech", 
                                                     savedir="pretrained_models/asr-transformer-transformerlm-librispeech",  
                                                     run_opts={"device":"cpu"})
-
- 
-
-        #for percent_complete in range(100):
-        #    time.sleep(0.1)
-        #    my_bar.progress(percent_complete + 1)
-            
-        
+                 
         st.write("#")
-
                
-        spoken = asr_model.transcribe_file(uploaded_file.name)    
-        
+        if not os.path.exists("audio"):
+            os.makedirs("audio")
+        path = os.path.join("audio", uploaded_file.name)
+        if_save_audio = save_audio(uploaded_file)
+
+        spoken = asr_model.transcribe_file(path)           
         with st.spinner('Processing...'):
              time.sleep(3)
                 
@@ -170,21 +185,13 @@ if st.session_state.sidebar == 'Home':
         st.info(spoken)
    
         
-
-        #spoken = asr_model.transcribe_file(audio_file)
-        #st.write('You said:')
-        #st.info(spoken)
-
-
-
+    
         ### SPEAKER RECOGNITION
-
 
         verifier = SpeakerRecognition.from_hparams(source="speechbrain/spkrec-ecapa-voxceleb", run_opts={"device":"cpu"})
 
 
-
-        q = audio_to_numpy(uploaded_file.name)
+        q = audio_to_numpy(path)
         my_embeddings = np.squeeze(
             verifier.encode_batch(torch.tensor(q)).detach().cpu().numpy())
    
