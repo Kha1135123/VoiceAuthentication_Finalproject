@@ -238,7 +238,8 @@ if st.session_state.sidebar == 'Home':
         # vơi labels là array chưa k id giống với target_embed nhất 
         target_embed = my_embeddings
         labels, distances = p.knn_query(target_embed, k = 4)
-        
+        st.write(labels)
+
         st.write("#")
 
         if labels[0][0] == 2 and spoken == 'TWO SIX ZERO SIX':
@@ -257,7 +258,6 @@ with st.sidebar:
         st.markdown(" - Kha - 2")
         st.markdown(" - Tân - 3")
         st.markdown(" - Phú - 4")
-        st.write(labels)
 
         st.write('#')    
 
