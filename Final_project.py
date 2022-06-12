@@ -40,6 +40,26 @@ secondaryBackgroundColor =  "#EBD2B9" # wheat
 textColor = "#5D6169" # grey
 
 
+def audiorec_demo_app():
+
+    parent_dir = os.path.dirname(os.path.abspath(__file__))
+    # Custom REACT-based component for recording client audio in browser
+    build_dir = os.path.join(parent_dir, "st_audiorec/frontend/build")
+    # specify directory and initialize st_audiorec object functionality
+    st_audiorec = components.declare_component("st_audiorec", path=build_dir)
+
+    # TITLE and Creator information
+    st.title('Voice password')
+    st.markdown('Audio recorder implemented by '
+        '[Stefan Rummer](https://www.linkedin.com/in/stefanrmmr/) - '
+        'view project source code on '
+        '[GitHub](https://github.com/stefanrmmr/streamlit_audio_recorder)')
+    st.write('\n\n')
+
+    # STREAMLIT AUDIO RECORDER Instance
+    st_audiorec()
+
+
 def save_audio(file):
     if file.size > 4000000:
         return 1
@@ -55,7 +75,6 @@ def save_audio(file):
                 os.unlink(file_path)
         except Exception as e:
             print('Failed to delete %s. Reason: %s' % (file_path, e))
-
     try:
         with open("log0.txt", "a") as f:
             f.write(f"{file.name} - {file.size} - {datetoday};\n")
@@ -113,55 +132,16 @@ with st.sidebar:
 
 if st.session_state.sidebar == 'Home':
 
-
-
-    def audiorec_demo_app():
-
-        parent_dir = os.path.dirname(os.path.abspath(__file__))
-        # Custom REACT-based component for recording client audio in browser
-        build_dir = os.path.join(parent_dir, "st_audiorec/frontend/build")
-        # specify directory and initialize st_audiorec object functionality
-        st_audiorec = components.declare_component("st_audiorec", path=build_dir)
-
-        # TITLE and Creator information
-        st.title('Voice password')
-        st.markdown('Audio recorder implemented by '
-            '[Stefan Rummer](https://www.linkedin.com/in/stefanrmmr/) - '
-            'view project source code on '
-            '[GitHub](https://github.com/stefanrmmr/streamlit_audio_recorder)')
-        st.write('\n\n')
-
-        # STREAMLIT AUDIO RECORDER Instance
-        st_audiorec()
-
-
     if __name__ == '__main__':
 
         # call main function
         audiorec_demo_app()
 
-
-
-
         
-
-    # Print the current working directory
-    # st.write("Current working directory: {0}".format(os.getcwd()))
-
-    ## Change the current working directory
-    #os.chdir('C:/Users/Administrator/Downloads')
-    # E:/Finalproject
-
-    # Print the current working directory
-    # st.write("New Current working directory: {0}".format(os.getcwd()))
-
-
-
     ### UPLOAD RECORDED AUDIO
    
     uploaded_file = st.file_uploader("Choose a file")
     #st.write("Filename:", uploaded_file.name)
-
     if uploaded_file is not None:
 
         ### SPEECH_TO_TEXT
@@ -188,38 +168,27 @@ if st.session_state.sidebar == 'Home':
         
     
         ### SPEAKER RECOGNITION
-
         verifier = SpeakerRecognition.from_hparams(source="speechbrain/spkrec-ecapa-voxceleb", run_opts={"device":"cpu"})
 
 
         q = audio_to_numpy(path)
         my_embeddings = np.squeeze(
             verifier.encode_batch(torch.tensor(q)).detach().cpu().numpy())
-   
-   
+     
          #st.write(my_embeddings.shape)
          #st.write(q.shape)
 
-
+            
         ## Upload sample voice
-
-        # Change the current working directory
-        #os.chdir('E:/Finalproject')
-
-        #cur = os.getcwd()
         voice_1 = os.path.join('SampleVoice_ggtranslate.wav')
-
-
         g = audio_to_numpy(voice_1)
         my_embeddings1 = np.squeeze(
-            verifier.encode_batch(torch.tensor(g)).detach().cpu().numpy())
+            verifier.encode_batch(torch.tensor(g)).detach().cpu().numpy())        
         #st.write(my_embeddings1.shape)
         #st.write(g.shape)
 
-
-
+        
         voice_2 = os.path.join('SampleVoice_kha.wav')
-
         k = audio_to_numpy(voice_2)
         my_embeddings2 = np.squeeze(
             verifier.encode_batch(torch.tensor(k)).detach().cpu().numpy())
@@ -227,23 +196,18 @@ if st.session_state.sidebar == 'Home':
         #st.write(k.shape)
 
 
-
-
-
-
         my_id_1 = 1
         my_id_2 = 2
         # my_id_3 = 3
         # my_id_4 = 4
 
+        
         p = hnswlib.Index(space = 'cosine', dim = 192)
         p.init_index(max_elements = 1000, ef_construction = 200, M = 16)
         # với my_embedding là embedding voice của các em
         # và my_id là id của các em trong database (ví dụ my_id=0)
         p.add_items(my_embeddings1, my_id_1)
         p.add_items(my_embeddings2, my_id_2)
-
-
         # p.add_items(my_embeddings_3, my_id_3)
         # p.add_items(my_embeddings_4, my_id_4)
 
@@ -251,7 +215,6 @@ if st.session_state.sidebar == 'Home':
         # ta thực hiện search bằng dòng code sau
         # vơi labels là array chưa k id giống với target_embed nhất 
         target_embed = my_embeddings
-
         labels, distances = p.knn_query(target_embed, k = 2)
 
         #st.write(labels)
@@ -261,14 +224,8 @@ if st.session_state.sidebar == 'Home':
         target_embed = my_embeddings
         labels, distances = p.knn_query(target_embed, k = 2)
 
-
-
-
-
-
+        
         st.write("#")
-
-
 
 
         if labels[0][0] == 2 and spoken == 'TWO SIX ZERO SIX':
@@ -281,7 +238,6 @@ if st.session_state.sidebar == 'Home':
 
 
 if st.session_state.sidebar == 'Tutorial':
-
     st.title('Tutorial')
 
     st.write('This is the `tutorial page` of this application')
