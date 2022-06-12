@@ -96,6 +96,15 @@ def audio_to_numpy(filenames):
     return x       
 
 
+## Load pretrained model
+
+verifier = SpeakerRecognition.from_hparams(source="speechbrain/spkrec-ecapa-voxceleb", run_opts={"device":"cpu"})
+
+asr_model = EncoderDecoderASR.from_hparams(source="speechbrain/asr-transformer-transformerlm-librispeech", 
+                                            savedir="pretrained_models/asr-transformer-transformerlm-librispeech",  
+                                            run_opts={"device":"cpu"})
+
+
 ## Upload sample voice
 
 voice_1 = os.path.join('An.wav')
