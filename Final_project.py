@@ -112,22 +112,22 @@ with st.sidebar:
     st.write('##')    
     st.write('##')    
 
+    ## Rating
+    #rate = st.select_slider(
+    #    'Wanna rate this app?  😎 ',
+    #    options=['awful', 'bad', 'okay', 'good', 'great'])
 
-    rate = st.select_slider(
-        'Wanna rate this app?  😎 ',
-        options=['awful', 'bad', 'okay', 'good', 'great'])
+    #if rate == 'awful' or rate == 'bad' or rate =='okay':    
+    #    title = st.text_input('Feedback', '')
+    #    if title != '':
+    #        time.sleep(3)
+    #        st.write('Thank you for your feedback!')
 
-    if rate == 'awful' or rate == 'bad' or rate =='okay':    
-        title = st.text_input('Feedback', '')
-        if title != '':
-            time.sleep(3)
-            st.write('Thank you for your feedback!')
-
-    if rate =='good' or rate=='great':
-        txt = st.text_input('Feedback', '')
-        if txt != '':
-            time.sleep(3)
-            st.write('Thank you for your support!')            
+    #if rate =='good' or rate=='great':
+    #    txt = st.text_input('Feedback', '')
+    #    if txt != '':
+    #        time.sleep(3)
+    #        st.write('Thank you for your support!')            
 
 
 if st.session_state.sidebar == 'Home':
