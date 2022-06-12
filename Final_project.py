@@ -96,6 +96,36 @@ def audio_to_numpy(filenames):
     return x       
 
 
+## Upload sample voice
+
+voice_1 = os.path.join(cur, 'An.wav')
+g = audio_to_numpy(voice_1)
+my_embeddings1 = np.squeeze(
+      verifier.encode_batch(torch.tensor(g)).detach().cpu().numpy())
+#st.write(my_embeddings1.shape)
+#st.write(g.shape)
+
+
+voice_2 = os.path.join(cur, 'SampleVoice_kha.wav')
+k = audio_to_numpy(voice_2)
+my_embeddings2 = np.squeeze(
+     verifier.encode_batch(torch.tensor(k)).detach().cpu().numpy())
+#st.write(my_embeddings2.shape)
+#st.write(k.shape)
+
+
+voice_3 = os.path.join(cur, 'Tan.wav')
+m = audio_to_numpy(voice_3)
+my_embeddings3 = np.squeeze(
+     verifier.encode_batch(torch.tensor(m)).detach().cpu().numpy())
+
+
+voice_4 = os.path.join(cur, 'Phu.wav')
+n = audio_to_numpy(voice_4)
+my_embeddings4 = np.squeeze(
+     verifier.encode_batch(torch.tensor(n)).detach().cpu().numpy())
+
+
 
 ###CREATING SIDEBAR
 # Using object notation
@@ -178,28 +208,11 @@ if st.session_state.sidebar == 'Home':
          #st.write(my_embeddings.shape)
          #st.write(q.shape)
 
-            
-        ## Upload sample voice
-        voice_1 = os.path.join('SampleVoice_ggtranslate.wav')
-        g = audio_to_numpy(voice_1)
-        my_embeddings1 = np.squeeze(
-            verifier.encode_batch(torch.tensor(g)).detach().cpu().numpy())        
-        #st.write(my_embeddings1.shape)
-        #st.write(g.shape)
-
-        
-        voice_2 = os.path.join('SampleVoice_kha.wav')
-        k = audio_to_numpy(voice_2)
-        my_embeddings2 = np.squeeze(
-            verifier.encode_batch(torch.tensor(k)).detach().cpu().numpy())
-        #st.write(my_embeddings2.shape)
-        #st.write(k.shape)
-
 
         my_id_1 = 1
         my_id_2 = 2
-        # my_id_3 = 3
-        # my_id_4 = 4
+        my_id_3 = 3
+        my_id_4 = 4
 
         
         p = hnswlib.Index(space = 'cosine', dim = 192)
@@ -208,25 +221,16 @@ if st.session_state.sidebar == 'Home':
         # và my_id là id của các em trong database (ví dụ my_id=0)
         p.add_items(my_embeddings1, my_id_1)
         p.add_items(my_embeddings2, my_id_2)
-        # p.add_items(my_embeddings_3, my_id_3)
-        # p.add_items(my_embeddings_4, my_id_4)
+        p.add_items(my_embeddings3, my_id_3)
+        p.add_items(my_embeddings4, my_id_4)
 
 
         # ta thực hiện search bằng dòng code sau
         # vơi labels là array chưa k id giống với target_embed nhất 
         target_embed = my_embeddings
-        labels, distances = p.knn_query(target_embed, k = 2)
-
-        st.sidebar.write(labels)
-        st.sidebar.write(distances)
-
-
-        target_embed = my_embeddings
-        labels, distances = p.knn_query(target_embed, k = 2)
-
+        labels, distances = p.knn_query(target_embed, k = 4)
         
         st.write("#")
-
 
         if labels[0][0] == 2 and spoken == 'TWO SIX ZERO SIX':
             st.success('Password Correct')
@@ -236,7 +240,24 @@ if st.session_state.sidebar == 'Home':
         else:
             st.error('Incorrect password or Invalid speaker. Please try again!')
 
+            
+            
+with st.sidebar:
+        st.markdown(" #### Labels name:")
+        st.markdown(" - Ân - 1  ")
+        st.markdown(" - Kha - 2")
+        st.markdown(" - Tân - 3")
+        st.markdown(" - Phú - 4")
+        st.write(labels)
 
+        st.write('#')    
+
+        st.markdown(" #### Distance to each labels")
+        st.write(distances)
+
+            
+            
+            
 if st.session_state.sidebar == 'Tutorial':
     st.title('Tutorial')
 
