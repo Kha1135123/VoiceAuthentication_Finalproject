@@ -88,6 +88,7 @@ with st.sidebar:
     st.write('##')
     st.write('##')
     st.write('##')    
+    st.write('##')    
 
     ## Rating
     #rate = st.select_slider(
@@ -233,19 +234,30 @@ if st.session_state.sidebar == 'Home':
             st.error('Incorrect password or Invalid speaker. Please try again!')
 
             
-            
-        with st.sidebar:
-                st.markdown(" #### Labels name:")
-                st.markdown(" - Ân - 1  ")
-                st.markdown(" - Kha - 2")
-                st.markdown(" - Tân - 3")
-                st.markdown(" - Phú - 4")
+        with st.sidebar:  
+
+                st.sidebar.subheader("Voice labels name")
+                col1, col2, col3, col4 = st.columns(4)
+                with col1:
+                    st.markdown("Ân - 1")
+                with col2:
+                    st.markdown("Kha - 2")             
+                with col3:
+                    st.markdown("Tân - 3")                
+                with col4:
+                    st.markdown("Phú - 4")
                 st.write(labels)
 
                 st.write('#')    
 
-                st.markdown(" #### Distance to each labels")
+                st.sidebar.subheader("Distance to each labels")
                 st.write(distances)
+
+                st.write('#')    
+
+                st.sidebar.subheader("Recorded audio file")
+                file_details = {"Filename": uploaded_file.name, "FileSize": uploaded_file.size}
+                st.sidebar.write(file_details)
 
             
             
@@ -291,6 +303,17 @@ if st.session_state.sidebar == 'About':
         - Thus, this AI application is designed to be capable of verifying user's identity, based on the voice characteristics such as tones, features, and at the same time integrating with voice password authentication.
                  ''')
 
+    st.markdown('''- ######  [GitHub repository of the web-application](https://github.com/Kha1135123/VoiceAuthentication_Finalproject)''')
+
+
+    st.markdown("##### Theory")
+    with st.expander("See Wikipedia definition_Speech Recognition"):
+        components.iframe("https://en.wikipedia.org/wiki/Speech_recognition",
+                              height=320, scrolling=True)
+    with st.expander("See Wikipedia definition_Speaker Recognition"):
+        components.iframe("https://en.wikipedia.org/wiki/Speaker_recognition",
+                              height=320, scrolling=True)
+
 
     st.markdown('#### *Project goals*')
     st.markdown('''
@@ -303,7 +326,7 @@ if st.session_state.sidebar == 'About':
 
     st.markdown('#### **Scope of work**')
     st.markdown('''    
-        - Find an appropriated pretrained model in speech recognition. 
+        - Find an appropriated pretrained model in speech recognition and voice recognition
         - Process recorded audio on Streamlit platform. 
         - A completed Streamlit application will be built after accomplishing the basic objectives.
         - After this project, I will be more experienced in data processing related to audio and in deploying an application on Streamlit.
@@ -311,26 +334,31 @@ if st.session_state.sidebar == 'About':
 
     st.markdown('''
         #### *A brief introduction about the project*
-        ##### *Abstract*
-        - 
+ 
         ##### *Model*
-        - Speech to text Pretrained Model: [speechbrain_ASR](https://huggingface.co/speechbrain/asr-wav2vec2-commonvoice-en) 
-        - Speaker Verification: [speechbrain_Voxceleb](https://huggingface.co/speechbrain/spkrec-ecapa-voxceleb)
+        - Speech to text Pretrained Model: [speechbrain/ASR-Wav2Vec2 model -- Commonvoice-en](https://huggingface.co/speechbrain/asr-wav2vec2-commonvoice-en) 
+        - Speaker Verification: [speechbrain/ECAPA-TDNN model -- Voxceleb](https://huggingface.co/speechbrain/spkrec-ecapa-voxceleb)
         ##### *Methods*
         - Applying ASR pretrained model to translate speech to text.
         - Converting audio file into numpy array by librosa module.  
-        - Using cosine similarity based on the user's embeddings extracting from the audio to identify voices. 
+        - Using cosine similarity based on the user's embeddings extracting from the audio to identify voices by ECAPA-TDNN model. 
         ##### *Note*
         - **Reference**:
             - Streamlit audio recorder: https://github.com/stefanrmmr/streamlit_audio_recorder 
             - Streamlit API reference: https://docs.streamlit.io/library/api-reference
-        - To set up audio recorder component, read and follow the instruction in [here](https://github.com/stefanrmmr/streamlit_audio_recorder#readme)    
-        - Due to being unable to directly return audio recording-data to Python (binary base64), it is required to download the recorded audio. Therefore, change the current working directory to Downloads Folder of your desktop in order to allow the computer to detect to recorded audio file as similar to: ''')
+        - To set up audio recorder component, read and follow the instruction in [here](https://github.com/stefanrmmr/streamlit_audio_recorder#readme) ''')   
+    st.write("#") 
+    st.markdown(''' - If you want to try them we recommend to clone our GitHub repo''')
+    st.code("git clone https://github.com/Kha1135123/VoiceAuthentication_Finalproject.git", language='bash')
+       
+    st.markdown(''' 
+    After that, just change the following relevant sections in the Final_project.py file to use this model:
+    - Change the current working directory to Downloads Folder of your desktop in order to allow the computer to detect to recorded audio file as similar: ''')
     st.code( "os.chdir('C:/Users/Administrator/Downloads')", language='python')
 
 
-    st.markdown('''
-        - Afterwards, change the working directory back to the directory of your Streamlit project by:
+    st.markdown('''       
+    - Afterwards, change the working directory back to the directory of your Streamlit project by:
                 ''')
     st.code("os.chdir('/home/ _Your_project_folder_')", language='python')
 
