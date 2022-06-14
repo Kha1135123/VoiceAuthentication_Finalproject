@@ -225,13 +225,17 @@ if st.session_state.sidebar == 'Home':
 
         st.write("#")
 
-        if labels[0][0] == 2 and spoken == 'TWO SIX ZERO SIX':
+        if spoken == 'TWO SIX ZERO SIX':  
             st.success('Password Correct')
-            st.balloons()
-            st.snow()
-            st.write('Welcome to my Youtube channel. Please click the following link: https://www.youtube.com/channel/UCViAzz3Qtz8IQdUI9DiJ3WA/featured')
+            if labels[0][0] == 2 and distances[0][0] <0.3:          
+                st.balloons()
+                st.snow()
+                st.write('Welcome to my Youtube channel. Please click the following link: https://www.youtube.com/channel/UCViAzz3Qtz8IQdUI9DiJ3WA/featured')
+            else: 
+                st.error('Invalid speaker. Please try again!')
+
         else:
-            st.error('Incorrect password or Invalid speaker. Please try again!')
+            st.error('Incorrect password. Please try again!')
 
             
         with st.sidebar:  
