@@ -1,10 +1,10 @@
 ---
-title: Demo Space
+title: Voice password app
 emoji: 🤗
 colorFrom: yellow
 colorTo: orange
-sdk: gradio
-app_file: app.py
+sdk: streamlit
+app_file: Final_project.py
 pinned: false
 ---
 
