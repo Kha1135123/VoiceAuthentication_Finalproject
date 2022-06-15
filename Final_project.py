@@ -304,7 +304,7 @@ if st.session_state.sidebar == 'Tutorial':
     st.markdown('##### Step 4: Finish')
     st.markdown('- It will take about 15 sec to process the data')
     st.markdown('- In case of `incorrect password` or `invalid speaker`, click `Χ` next to the uploaded file to delete the audio and record again as from step 1')
-
+    st.markdown('- Before uploading a new audio, press `Clear All` to clear the memory to avoid clashes between variables')
 
 
 if st.session_state.sidebar == 'About':
