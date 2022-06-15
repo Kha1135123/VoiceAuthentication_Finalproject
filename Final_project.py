@@ -137,18 +137,20 @@ if st.session_state.sidebar == 'Home':
         
     ### UPLOAD RECORDED AUDIO
    
-    with st.form("my-form", clear_on_submit=True):
-        uploaded_file = st.file_uploader("FILE UPLOADER")
-        submitted = st.form_submit_button("UPLOAD!")
+    #with st.form("my-form", clear_on_submit=True):
+    #    uploaded_file = st.file_uploader("FILE UPLOADER")
+    #    submitted = st.form_submit_button("UPLOAD!")
 
-    if submitted and uploaded_file is not None:
-        st.write("UPLOADED!")
-        # do stuff with your uploaded file
-    if uploaded_file is not None:
+    #if submitted and uploaded_file is not None:
+    #    st.write("UPLOADED!")
+    #    # do stuff with your uploaded file
+    #if uploaded_file is not None:
+    
+    uploaded_file = st.file_uploader("Choose a file")
+    if uploaded_file is not None:    
 
         ### SPEECH_TO_TEXT
         ## Upload pretrained model
-
         asr_model = EncoderDecoderASR.from_hparams(source="speechbrain/asr-transformer-transformerlm-librispeech", 
                                                     savedir="pretrained_models/asr-transformer-transformerlm-librispeech",  
                                                     run_opts={"device":"cpu"})
@@ -268,6 +270,11 @@ if st.session_state.sidebar == 'Home':
                 file_details = {"Filename": uploaded_file.name, "FileSize": uploaded_file.size}
                 st.sidebar.write(file_details)
 
+                
+    if st.button("Clear All"):
+        # Clear values from *all* memoized functions:
+        # i.e. clear values from both square and cube
+        st.experimental_memo.clear()            
             
             
             
