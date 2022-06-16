@@ -280,7 +280,7 @@ if st.session_state.sidebar == 'Home':
         try:
             shutil.rmtree("audio")
         except OSError as e:
-            print("Error: %s - %s." % (e.filename, e.strerror))
+            st.write("Error: %s - %s." % (e.filename, e.strerror))
 
 
         #if os.path.exists("audio"):
