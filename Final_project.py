@@ -17,6 +17,8 @@ import soundfile
 import hnswlib
 import time
 from datetime import datetime
+import shutil, sys                                                                                                                                                    
+
 
 
 ## DESIGN implement changes to the standard streamlit UI/UX
@@ -244,7 +246,12 @@ if st.session_state.sidebar == 'Home':
 
 
         with st.sidebar:  
-
+                #df = pd.DataFrame(
+                #    np.random.randn(10, 5),
+                #     columns=())
+                #st.table(df)
+                
+                
                 st.sidebar.subheader("Voice labels name")
                 col1, col2, col3, col4 = st.columns(4)
                 with col1:
