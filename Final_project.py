@@ -272,8 +272,8 @@ if st.session_state.sidebar == 'Home':
                 st.sidebar.write(file_details)
      
     
-        if os.path.exists("audio"):
-            os.rmdir("audio")	
+    if os.path.exists("audio"):
+         os.rmdir("audio")	
                 
     if st.button("Clear All"):
         # Clear values from *all* memoized functions:
