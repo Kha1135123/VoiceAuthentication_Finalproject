@@ -155,11 +155,11 @@ if st.session_state.sidebar == 'Home':
 
     if submitted and uploaded_file is not None:
         # do stuff with your uploaded file
-        #if os.path.exists("audio"):
-        #    try:
-        #        shutil.rmtree("audio")
-        #    except OSError as e:
-        #        st.write("Error: %s - %s." % (e.filename, e.strerror))
+        if os.path.exists("audio"):
+            try:
+                shutil.rmtree("audio")
+            except OSError as e:
+                st.write("Error: %s - %s." % (e.filename, e.strerror))
         
         with st.spinner('Processing...'):
             ### SPEECH_TO_TEXT
