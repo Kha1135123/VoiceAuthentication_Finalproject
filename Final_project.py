@@ -76,51 +76,7 @@ def save_audio(file):
         f.write(file.getbuffer())
     return 0
 
-@st.cache(hash_func = {speechbrain.pretrained.interfaces.SpeakerRecognition: verifier})
-def create_embed():
-    verifier = SpeakerRecognition.from_hparams(source="speechbrain/spkrec-ecapa-voxceleb", run_opts={"device":"cpu"})
 
-    ## Upload sample voice
-    voice_1 = os.path.join('An.wav')
-    g = audio_to_numpy(voice_1)
-    my_embeddings1 = np.squeeze(
-        verifier.encode_batch(torch.tensor(g)).detach().cpu().numpy())
-    #st.write(my_embeddings1.shape)
-    #st.write(g.shape)
-
-    voice_2 = os.path.join('SampleVoice_kha.wav')
-    k = audio_to_numpy(voice_2)
-    my_embeddings2 = np.squeeze(
-         verifier.encode_batch(torch.tensor(k)).detach().cpu().numpy())
-    #st.write(my_embeddings2.shape)
-    #st.write(k.shape)
-
-    voice_3 = os.path.join('Tan.wav')
-    m = audio_to_numpy(voice_3)
-    my_embeddings3 = np.squeeze(
-          verifier.encode_batch(torch.tensor(m)).detach().cpu().numpy())
-
-    voice_4 = os.path.join('Phu.wav')
-    n = audio_to_numpy(voice_4)
-    my_embeddings4 = np.squeeze(
-           verifier.encode_batch(torch.tensor(n)).detach().cpu().numpy())
-
-
-    my_id_1 = 1
-    my_id_2 = 2
-    my_id_3 = 3
-    my_id_4 = 4
-
-
-    p = hnswlib.Index(space = 'cosine', dim = 192)
-    p.init_index(max_elements = 1000, ef_construction = 200, M = 16)
-    # my_embedding là embedding voice
-    # my_id là id trong database
-    p.add_items(my_embeddings1, my_id_1)
-    p.add_items(my_embeddings2, my_id_2)
-    p.add_items(my_embeddings3, my_id_3)
-    p.add_items(my_embeddings4, my_id_4)
-    return verifier, p
 
 
 ###CREATING SIDEBAR
@@ -181,7 +137,51 @@ if st.session_state.sidebar == 'Home':
         audiorec_demo_app()
 
 
-    verifier, p = create_embed()    
+    verifier = SpeakerRecognition.from_hparams(source="speechbrain/spkrec-ecapa-voxceleb", run_opts={"device":"cpu"})
+
+    ## Upload sample voice
+    voice_1 = os.path.join('An.wav')
+    g = audio_to_numpy(voice_1)
+    my_embeddings1 = np.squeeze(
+        verifier.encode_batch(torch.tensor(g)).detach().cpu().numpy())
+    #st.write(my_embeddings1.shape)
+    #st.write(g.shape)
+
+    voice_2 = os.path.join('SampleVoice_kha.wav')
+    k = audio_to_numpy(voice_2)
+    my_embeddings2 = np.squeeze(
+         verifier.encode_batch(torch.tensor(k)).detach().cpu().numpy())
+    #st.write(my_embeddings2.shape)
+    #st.write(k.shape)
+
+    voice_3 = os.path.join('Tan.wav')
+    m = audio_to_numpy(voice_3)
+    my_embeddings3 = np.squeeze(
+          verifier.encode_batch(torch.tensor(m)).detach().cpu().numpy())
+
+    voice_4 = os.path.join('Phu.wav')
+    n = audio_to_numpy(voice_4)
+    my_embeddings4 = np.squeeze(
+           verifier.encode_batch(torch.tensor(n)).detach().cpu().numpy())
+
+
+    my_id_1 = 1
+    my_id_2 = 2
+    my_id_3 = 3
+    my_id_4 = 4
+
+
+    p = hnswlib.Index(space = 'cosine', dim = 192)
+    p.init_index(max_elements = 1000, ef_construction = 200, M = 16)
+    # my_embedding là embedding voice
+    # my_id là id trong database
+    p.add_items(my_embeddings1, my_id_1)
+    p.add_items(my_embeddings2, my_id_2)
+    p.add_items(my_embeddings3, my_id_3)
+    p.add_items(my_embeddings4, my_id_4)   
+    
+    
+    
     ### UPLOAD RECORDED AUDIO
   
     #uploaded_file = st.file_uploader("Choose a file")
