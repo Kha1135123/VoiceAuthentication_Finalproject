@@ -273,7 +273,7 @@ if st.session_state.sidebar == 'Home':
      
     
         if os.path.exists("audio"):
-             os.remove(uploaded_file)	
+             os.remove(uploaded_file.name)	
                 
     if st.button("Clear All"):
         # Clear values from *all* memoized functions:
