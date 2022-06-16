@@ -3,6 +3,7 @@
 import os
 import streamlit as st
 import streamlit.components.v1 as components
+from streamlit import caching
 
 import io
 import librosa
@@ -270,10 +271,11 @@ if st.session_state.sidebar == 'Home':
                 st.sidebar.subheader("Recorded audio file")
                 file_details = {"Filename": uploaded_file.name, "FileSize": uploaded_file.size}
                 st.sidebar.write(file_details)
-     
+      
+        caching.clear_cache()   
     
-    if os.path.exists("audio"):
-         os.remove(uploaded_file.name)	
+        #if os.path.exists("audio"):
+        #     os.remove(uploaded_file.name)	
                 
     if st.button("Clear All"):
         # Clear values from *all* memoized functions:
