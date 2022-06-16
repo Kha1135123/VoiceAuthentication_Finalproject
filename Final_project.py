@@ -138,16 +138,16 @@ if st.session_state.sidebar == 'Home':
         
     ### UPLOAD RECORDED AUDIO
   
-    uploaded_file = st.file_uploader("Choose a file")
-    if uploaded_file is not None:
+    #uploaded_file = st.file_uploader("Choose a file")
+    #if uploaded_file is not None:
     
-    #with st.form("my-form", clear_on_submit=True):
-    #    uploaded_file = st.file_uploader("Choose a file")
-    #    submitted = st.form_submit_button("Submit!")
+    with st.form("my-form", clear_on_submit=True):
+        uploaded_file = st.file_uploader("Choose a file")
+        submitted = st.form_submit_button("Submit!")
 
-    #if submitted and uploaded_file is not None:
-    #    # do stuff with your uploaded file
-    #    st.write("Submitted!")
+    if submitted and uploaded_file is not None:
+        # do stuff with your uploaded file
+        st.write("Wait a second...")
     
 
         ### SPEECH_TO_TEXT
