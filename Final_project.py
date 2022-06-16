@@ -174,7 +174,6 @@ if st.session_state.sidebar == 'Home':
                 os.makedirs("audio")
             path = os.path.join("audio", uploaded_file.name)
             st.write("The dir is: %s" %os.listdir("audio")
-            
             if_save_audio = save_audio(uploaded_file)
 
             spoken = asr_model.transcribe_file(path)           
