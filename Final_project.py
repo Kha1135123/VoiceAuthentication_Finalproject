@@ -163,77 +163,77 @@ if st.session_state.sidebar == 'Home':
         if_save_audio = save_audio(uploaded_file)
 
          
-       spoken = asr_model.transcribe_file(path)           
-       with st.spinner('Processing...'):
+        spoken = asr_model.transcribe_file(path)           
+        with st.spinner('Processing...'):
             time.sleep(3)
 
-       st.write('You said:')
-       st.info(spoken)
+        st.write('You said:')
+        st.info(spoken)
    
         
     
-       ### SPEAKER RECOGNITION
-       ## Load pretrained model
-       verifier = SpeakerRecognition.from_hparams(source="speechbrain/spkrec-ecapa-voxceleb", run_opts={"device":"cpu"})
+        ### SPEAKER RECOGNITION
+        ## Load pretrained model
+        verifier = SpeakerRecognition.from_hparams(source="speechbrain/spkrec-ecapa-voxceleb", run_opts={"device":"cpu"})
 
-       ## Upload sample voice
-       voice_1 = os.path.join('An.wav')
-       g = audio_to_numpy(voice_1)
-       my_embeddings1 = np.squeeze(
+        ## Upload sample voice
+        voice_1 = os.path.join('An.wav')
+        g = audio_to_numpy(voice_1)
+        my_embeddings1 = np.squeeze(
              verifier.encode_batch(torch.tensor(g)).detach().cpu().numpy())
-       #st.write(my_embeddings1.shape)
-       #st.write(g.shape)
+        #st.write(my_embeddings1.shape)
+        #st.write(g.shape)
 
-       voice_2 = os.path.join('SampleVoice_kha.wav')
-       k = audio_to_numpy(voice_2)
-       my_embeddings2 = np.squeeze(
+        voice_2 = os.path.join('SampleVoice_kha.wav')
+        k = audio_to_numpy(voice_2)
+        my_embeddings2 = np.squeeze(
             verifier.encode_batch(torch.tensor(k)).detach().cpu().numpy())
-       #st.write(my_embeddings2.shape)
-       #st.write(k.shape)
+        #st.write(my_embeddings2.shape)
+        #st.write(k.shape)
 
-       voice_3 = os.path.join('Tan.wav')
-       m = audio_to_numpy(voice_3)
-       my_embeddings3 = np.squeeze(
+        voice_3 = os.path.join('Tan.wav')
+        m = audio_to_numpy(voice_3)
+        my_embeddings3 = np.squeeze(
              verifier.encode_batch(torch.tensor(m)).detach().cpu().numpy())
 
-       voice_4 = os.path.join('Phu.wav')
-       n = audio_to_numpy(voice_4)
-       my_embeddings4 = np.squeeze(
+        voice_4 = os.path.join('Phu.wav')
+        n = audio_to_numpy(voice_4)
+        my_embeddings4 = np.squeeze(
             verifier.encode_batch(torch.tensor(n)).detach().cpu().numpy())
 
 
-       q = audio_to_numpy(path)
-       my_embeddings = np.squeeze(
+        q = audio_to_numpy(path)
+        my_embeddings = np.squeeze(
            verifier.encode_batch(torch.tensor(q)).detach().cpu().numpy())
 
-       #st.write(my_embeddings.shape)
-       #st.write(q.shape)
+        #st.write(my_embeddings.shape)
+        #st.write(q.shape)
 
 
-       my_id_1 = 1
-       my_id_2 = 2
-       my_id_3 = 3
-       my_id_4 = 4
+        my_id_1 = 1
+        my_id_2 = 2
+        my_id_3 = 3
+        my_id_4 = 4
 
 
-       p = hnswlib.Index(space = 'cosine', dim = 192)
-       p.init_index(max_elements = 1000, ef_construction = 200, M = 16)
-       # với my_embedding là embedding voice của các em
-       # và my_id là id của các em trong database (ví dụ my_id=0)
-       p.add_items(my_embeddings1, my_id_1)
-       p.add_items(my_embeddings2, my_id_2)
-       p.add_items(my_embeddings3, my_id_3)
-       p.add_items(my_embeddings4, my_id_4)
+        p = hnswlib.Index(space = 'cosine', dim = 192)
+        p.init_index(max_elements = 1000, ef_construction = 200, M = 16)
+        # với my_embedding là embedding voice của các em
+        # và my_id là id của các em trong database (ví dụ my_id=0)
+        p.add_items(my_embeddings1, my_id_1)
+        p.add_items(my_embeddings2, my_id_2)
+        p.add_items(my_embeddings3, my_id_3)
+        p.add_items(my_embeddings4, my_id_4)
 
 
-       # ta thực hiện search bằng dòng code sau
-       # vơi labels là array chưa k id giống với target_embed nhất 
-       target_embed = my_embeddings
-       labels, distances = p.knn_query(target_embed, k = 4)
+        # ta thực hiện search bằng dòng code sau
+        # vơi labels là array chưa k id giống với target_embed nhất 
+        target_embed = my_embeddings
+        labels, distances = p.knn_query(target_embed, k = 4)
 
-       st.write("#")
+        st.write("#")
 
-       if spoken == 'TWO SIX ZERO SIX':  
+        if spoken == 'TWO SIX ZERO SIX':  
            st.success('Password Correct')
            if labels[0][0] == 2 and distances[0][0] <0.3:          
                st.balloons()
@@ -242,7 +242,7 @@ if st.session_state.sidebar == 'Home':
            else: 
                st.error('Invalid speaker. Please try again!')
 
-       else:
+        else:
            st.error('Incorrect password. Please try again!')
 
             
