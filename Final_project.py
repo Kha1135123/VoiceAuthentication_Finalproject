@@ -159,7 +159,6 @@ if st.session_state.sidebar == 'Home':
                 shutil.rmtree("audio")
             except OSError as e:
                 st.write("Error: %s - %s." % (e.filename, e.strerror))
-        os.listdir("audio")
         
         with st.spinner('Processing...'):
             ### SPEECH_TO_TEXT
@@ -173,6 +172,8 @@ if st.session_state.sidebar == 'Home':
             if not os.path.exists("audio"):
                 os.makedirs("audio")
             path = os.path.join("audio", uploaded_file.name)
+            os.listdir("audio")
+            
             if_save_audio = save_audio(uploaded_file)
 
             spoken = asr_model.transcribe_file(path)           
