@@ -154,24 +154,29 @@ if st.session_state.sidebar == 'Home':
 
     if submitted and uploaded_file is not None:
         # do stuff with your uploaded file
-        
-        with st.spinner('Processing...'):
-            ### SPEECH_TO_TEXT
-            ## Upload pretrained model
-            asr_model = EncoderDecoderASR.from_hparams(source="speechbrain/asr-transformer-transformerlm-librispeech", 
-                                                        savedir="pretrained_models/asr-transformer-transformerlm-librispeech",  
-                                                        run_opts={"device":"cpu"})
+        if os.path.exists("audio"):
+            try:
+                shutil.rmtree("audio")
+            except OSError as e:
+                st.write("Error: %s - %s." % (e.filename, e.strerror))
 
-            st.write("#")
+            with st.spinner('Processing...'):
+                ### SPEECH_TO_TEXT
+                ## Upload pretrained model
+                asr_model = EncoderDecoderASR.from_hparams(source="speechbrain/asr-transformer-transformerlm-librispeech", 
+                                                            savedir="pretrained_models/asr-transformer-transformerlm-librispeech",  
+                                                            run_opts={"device":"cpu"})
 
-            if not os.path.exists("audio"):
-                os.makedirs("audio")
-            path = os.path.join("audio", uploaded_file.name)
-            if_save_audio = save_audio(uploaded_file)
+                st.write("#")
 
-            spoken = asr_model.transcribe_file(path)           
-            st.write('You said:')
-            st.info(spoken)
+                if not os.path.exists("audio"):
+                    os.makedirs("audio")
+                path = os.path.join("audio", uploaded_file.name)
+                if_save_audio = save_audio(uploaded_file)
+
+                spoken = asr_model.transcribe_file(path)           
+                st.write('You said:')
+                st.info(spoken)
 
             
         ### Speaker Verification   
@@ -274,13 +279,13 @@ if st.session_state.sidebar == 'Home':
                 file_details = {"Filename": uploaded_file.name, "FileSize": uploaded_file.size}
                 st.sidebar.write(file_details)
 
-        del(uploaded_file)
-        os.remove(path)
-        os.rmdir("audio")
-        try:
-            shutil.rmtree("audio")
-        except OSError as e:
-            st.write("Error: %s - %s." % (e.filename, e.strerror))
+        #del(uploaded_file)
+        #os.remove(path)
+        #os.rmdir("audio")
+        #try:
+        #    shutil.rmtree("audio")
+        #except OSError as e:
+        #    st.write("Error: %s - %s." % (e.filename, e.strerror))
 
 
         #if os.path.exists("audio"):
