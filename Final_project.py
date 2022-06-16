@@ -153,30 +153,28 @@ if st.session_state.sidebar == 'Home':
 
     if submitted and uploaded_file is not None:
         # do stuff with your uploaded file
-        st.write("Wait a second...")
-
-
-        ### SPEECH_TO_TEXT
-        ## Upload pretrained model
-        asr_model = EncoderDecoderASR.from_hparams(source="speechbrain/asr-transformer-transformerlm-librispeech", 
-                                                    savedir="pretrained_models/asr-transformer-transformerlm-librispeech",  
-                                                    run_opts={"device":"cpu"})
-
-        st.write("#")
-
-        if not os.path.exists("audio"):
-            os.makedirs("audio")
-        path = os.path.join("audio", uploaded_file.name)
-        if_save_audio = save_audio(uploaded_file)
-
-
-        spoken = asr_model.transcribe_file(path)           
+        
         with st.spinner('Processing...'):
-            time.sleep(3)
+            ### SPEECH_TO_TEXT
+            ## Upload pretrained model
+            asr_model = EncoderDecoderASR.from_hparams(source="speechbrain/asr-transformer-transformerlm-librispeech", 
+                                                        savedir="pretrained_models/asr-transformer-transformerlm-librispeech",  
+                                                        run_opts={"device":"cpu"})
 
-        st.write('You said:')
-        st.info(spoken)
+            st.write("#")
 
+            if not os.path.exists("audio"):
+                os.makedirs("audio")
+            path = os.path.join("audio", uploaded_file.name)
+            if_save_audio = save_audio(uploaded_file)
+
+
+            spoken = asr_model.transcribe_file(path)           
+            st.write('You said:')
+            st.info(spoken)
+
+            
+        ### Speaker Verification   
         verifier = SpeakerRecognition.from_hparams(source="speechbrain/spkrec-ecapa-voxceleb", run_opts={"device":"cpu"})
 
         ## Upload sample voice
