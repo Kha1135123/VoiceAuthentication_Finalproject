@@ -250,29 +250,53 @@ if st.session_state.sidebar == 'Home':
 
 
         with st.sidebar:  
-                #df = pd.DataFrame(
-                #    np.random.randn(10, 5),
-                #     columns=())
-                #st.table(df)
-                
-                
-                st.sidebar.subheader("Voice labels name")
-                col1, col2, col3, col4 = st.columns(4)
-                with col1:
-                    st.markdown("Ân - 1")
-                with col2:
-                    st.markdown("Kha - 2")             
-                with col3:
-                    st.markdown("Tân - 3")                
-                with col4:
-                    st.markdown("Phú - 4")
-                st.write(labels)
 
+                #st.sidebar.subheader("Voice labels name")
+                #col1, col2, col3, col4 = st.columns(4)
+                #with col1:
+                #    st.markdown("Ân - 1")
+                #with col2:
+                #    st.markdown("Kha - 2")             
+                #with col3:
+                #    st.markdown("Tân - 3")                
+                #with col4:
+                #    st.markdown("Phú - 4")
+                #st.write(labels)
                 st.write('#')    
 
                 st.sidebar.subheader("Distance to each labels")
-                st.write(distances)
+                #st.write(distances)
 
+                if labels[0][0]==2:  a="<b>Kha"
+                elif labels[0][0]==1:  a="<b>Ân"
+                elif labels[0][0]==3:  a="<b>Tân"
+                else:    a="<b>Phú"
+
+
+                if labels[0][1]==2:     b="<b>Kha"
+                elif labels[0][1]==1:   b="<b>Ân"
+                elif labels[0][1]==3:   b="<b>Tân"
+                else:  b="<b>Phú"
+
+
+                if labels[0][2]==2:  c="<b>Kha"
+                elif labels[0][2]==1:  c="<b>Ân"
+                elif labels[0][2]==3:  c="<b>Tân"
+                else:   c="<b>Phú"
+
+
+                if labels[0][3]==2: d="<b>Kha" 
+                elif labels[0][3]==1: d="<b>Ân" 
+                elif labels[0][3]==3: d="<b>Tân" 
+                else: d="<b>Phú"
+
+
+                fig = go.Figure(data=[go.Table(header=dict(values=[['<b>Name'],['<b>Label'],['<b>Distance']],
+                                    line_color='darkslategray', fill_color='wheat', align='left', font=dict(color='darkslategray', size=15), height=30),
+                                cells=dict(values=[[a,b,c,d],[labels[0][0],labels[0][1],labels[0][2],labels[0][3]], [distances[0][0],distances[0][1],distances[0][2],distances[0][3]]],
+                                    line_color='darkslategray', fill_color='wheat', align='left', font=dict(color='darkslategray', size=14), height=30))])
+                fig.update_layout(width=290, height=200, margin=dict(l=10, r=0, b=0, t=0))
+                st.write(fig)
                 st.write('#')    
 
                 st.sidebar.subheader("Recorded audio file")
