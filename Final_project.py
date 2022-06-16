@@ -76,7 +76,7 @@ def save_audio(file):
         f.write(file.getbuffer())
     return 0
 
-@st.cache
+@st.cache(hash_func = {speechbrain.pretrained.interfaces.SpeakerRecognition: verifier})
 def create_embed():
     verifier = SpeakerRecognition.from_hparams(source="speechbrain/spkrec-ecapa-voxceleb", run_opts={"device":"cpu"})
 
