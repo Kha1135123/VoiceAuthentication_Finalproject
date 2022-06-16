@@ -406,7 +406,7 @@ if st.session_state.sidebar == 'About':
         ##### *Methods*
         - Applying ASR pretrained model to translate speech to text.
         - Converting audio file into numpy array by librosa module.  
-        - Using cosine similarity based on the user's embeddings extracting from the audio to identify voices by ECAPA-TDNN model. 
+        - Using cosine similarity based on the user's embeddings extracting from the audio via ECAPA-TDNN model to identify voices. 
         ##### *Note*
         - **Reference**:
             - Streamlit audio recorder: https://github.com/stefanrmmr/streamlit_audio_recorder 
