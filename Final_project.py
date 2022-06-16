@@ -271,6 +271,10 @@ if st.session_state.sidebar == 'Home':
         del(uploaded_file)
         os.remove(path)
         os.rmdir("audio")
+        try:
+            shutil.rmtree("audio")
+        except OSError as e:
+            print("Error: %s - %s." % (e.filename, e.strerror))
 
 
         #if os.path.exists("audio"):
