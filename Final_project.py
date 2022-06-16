@@ -272,7 +272,9 @@ if st.session_state.sidebar == 'Home':
                 file_details = {"Filename": uploaded_file.name, "FileSize": uploaded_file.size}
                 st.sidebar.write(file_details)
       
-        del(uploaded_file)
+        del(uploaded_file
+        shutil.rmtree("audio")
+
     
         #if os.path.exists("audio"):
         #     os.remove(uploaded_file.name)	
