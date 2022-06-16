@@ -145,138 +145,138 @@ if st.session_state.sidebar == 'Home':
     #uploaded_file = st.file_uploader("Choose a file")
     #if uploaded_file is not None:
     
-    new_or_old = st.radio("Are you a new user?",("Yes","No"),key = "radio",horizontal=True)
-    if st.session_state.radio == "No":
-        with st.form("my-form", clear_on_submit=True):
-            uploaded_file = st.file_uploader("Choose a file")
-            submitted = st.form_submit_button("Submit!")
+    # new_or_old = st.radio("Are you a new user?",("Yes","No"),key = "radio",horizontal=True)
+    #if st.session_state.radio == "No":
+    with st.form("my-form", clear_on_submit=True):
+        uploaded_file = st.file_uploader("Choose a file")
+        submitted = st.form_submit_button("Submit!")
 
-        if submitted and uploaded_file is not None:
-            # do stuff with your uploaded file
-            st.write("Wait a second...")
-
-
-            ### SPEECH_TO_TEXT
-            ## Upload pretrained model
-            asr_model = EncoderDecoderASR.from_hparams(source="speechbrain/asr-transformer-transformerlm-librispeech", 
-                                                        savedir="pretrained_models/asr-transformer-transformerlm-librispeech",  
-                                                        run_opts={"device":"cpu"})
-
-            st.write("#")
-
-            if not os.path.exists("audio"):
-                os.makedirs("audio")
-            path = os.path.join("audio", uploaded_file.name)
-            if_save_audio = save_audio(uploaded_file)
+    if submitted and uploaded_file is not None:
+        # do stuff with your uploaded file
+        st.write("Wait a second...")
 
 
-            spoken = asr_model.transcribe_file(path)           
-            with st.spinner('Processing...'):
-                time.sleep(3)
+        ### SPEECH_TO_TEXT
+        ## Upload pretrained model
+        asr_model = EncoderDecoderASR.from_hparams(source="speechbrain/asr-transformer-transformerlm-librispeech", 
+                                                    savedir="pretrained_models/asr-transformer-transformerlm-librispeech",  
+                                                    run_opts={"device":"cpu"})
 
-            st.write('You said:')
-            st.info(spoken)
+        st.write("#")
 
-            verifier = SpeakerRecognition.from_hparams(source="speechbrain/spkrec-ecapa-voxceleb", run_opts={"device":"cpu"})
-
-            ## Upload sample voice
-            voice_1 = os.path.join('An.wav')
-            g = audio_to_numpy(voice_1)
-            my_embeddings1 = np.squeeze(
-                verifier.encode_batch(torch.tensor(g)).detach().cpu().numpy())
-            #st.write(my_embeddings1.shape)
-            #st.write(g.shape)
-
-            voice_2 = os.path.join('SampleVoice_kha.wav')
-            k = audio_to_numpy(voice_2)
-            my_embeddings2 = np.squeeze(
-                 verifier.encode_batch(torch.tensor(k)).detach().cpu().numpy())
-            #st.write(my_embeddings2.shape)
-            #st.write(k.shape)
-
-            voice_3 = os.path.join('Tan.wav')
-            m = audio_to_numpy(voice_3)
-            my_embeddings3 = np.squeeze(
-                  verifier.encode_batch(torch.tensor(m)).detach().cpu().numpy())
-
-            voice_4 = os.path.join('Phu.wav')
-            n = audio_to_numpy(voice_4)
-            my_embeddings4 = np.squeeze(
-                   verifier.encode_batch(torch.tensor(n)).detach().cpu().numpy())
+        if not os.path.exists("audio"):
+            os.makedirs("audio")
+        path = os.path.join("audio", uploaded_file.name)
+        if_save_audio = save_audio(uploaded_file)
 
 
-            my_id_1 = 1
-            my_id_2 = 2
-            my_id_3 = 3
-            my_id_4 = 4
+        spoken = asr_model.transcribe_file(path)           
+        with st.spinner('Processing...'):
+            time.sleep(3)
+
+        st.write('You said:')
+        st.info(spoken)
+
+        verifier = SpeakerRecognition.from_hparams(source="speechbrain/spkrec-ecapa-voxceleb", run_opts={"device":"cpu"})
+
+        ## Upload sample voice
+        voice_1 = os.path.join('An.wav')
+        g = audio_to_numpy(voice_1)
+        my_embeddings1 = np.squeeze(
+            verifier.encode_batch(torch.tensor(g)).detach().cpu().numpy())
+        #st.write(my_embeddings1.shape)
+        #st.write(g.shape)
+
+        voice_2 = os.path.join('SampleVoice_kha.wav')
+        k = audio_to_numpy(voice_2)
+        my_embeddings2 = np.squeeze(
+             verifier.encode_batch(torch.tensor(k)).detach().cpu().numpy())
+        #st.write(my_embeddings2.shape)
+        #st.write(k.shape)
+
+        voice_3 = os.path.join('Tan.wav')
+        m = audio_to_numpy(voice_3)
+        my_embeddings3 = np.squeeze(
+              verifier.encode_batch(torch.tensor(m)).detach().cpu().numpy())
+
+        voice_4 = os.path.join('Phu.wav')
+        n = audio_to_numpy(voice_4)
+        my_embeddings4 = np.squeeze(
+               verifier.encode_batch(torch.tensor(n)).detach().cpu().numpy())
 
 
-            p = hnswlib.Index(space = 'cosine', dim = 192)
-            p.init_index(max_elements = 1000, ef_construction = 200, M = 16)
-            # my_embedding là embedding voice
-            # my_id là id trong database
-            p.add_items(my_embeddings1, my_id_1)
-            p.add_items(my_embeddings2, my_id_2)
-            p.add_items(my_embeddings3, my_id_3)
-            p.add_items(my_embeddings4, my_id_4)   
+        my_id_1 = 1
+        my_id_2 = 2
+        my_id_3 = 3
+        my_id_4 = 4
 
-            q = audio_to_numpy(path)
-            my_embeddings = np.squeeze(
-               verifier.encode_batch(torch.tensor(q)).detach().cpu().numpy())
-            #st.write(my_embeddings.shape)
-            #st.write(q.shape)
+
+        p = hnswlib.Index(space = 'cosine', dim = 192)
+        p.init_index(max_elements = 1000, ef_construction = 200, M = 16)
+        # my_embedding là embedding voice
+        # my_id là id trong database
+        p.add_items(my_embeddings1, my_id_1)
+        p.add_items(my_embeddings2, my_id_2)
+        p.add_items(my_embeddings3, my_id_3)
+        p.add_items(my_embeddings4, my_id_4)   
+
+        q = audio_to_numpy(path)
+        my_embeddings = np.squeeze(
+           verifier.encode_batch(torch.tensor(q)).detach().cpu().numpy())
+        #st.write(my_embeddings.shape)
+        #st.write(q.shape)
             
-            # labels là array chưa k id giống với target_embed nhất 
-            target_embed = my_embeddings
-            labels, distances = p.knn_query(target_embed, k = 4)
+        # labels là array chưa k id giống với target_embed nhất 
+        target_embed = my_embeddings
+        labels, distances = p.knn_query(target_embed, k = 4)
 
             
-            st.write("#")
+        st.write("#")
 
-            if spoken == 'TWO SIX ZERO SIX':  
-               st.success('Password Correct')
-               if labels[0][0] == 2 and distances[0][0] <0.3:          
-                   st.balloons()
-                   st.snow()
-                   st.write('Welcome to my Youtube channel. Please click the following link: https://www.youtube.com/channel/UCViAzz3Qtz8IQdUI9DiJ3WA/featured')
-               else: 
-                   st.error('Invalid speaker. Please try again!')
+        if spoken == 'TWO SIX ZERO SIX':  
+           st.success('Password Correct')
+           if labels[0][0] == 2 and distances[0][0] <0.3:          
+               st.balloons()
+               st.snow()
+               st.write('Welcome to my Youtube channel. Please click the following link: https://www.youtube.com/channel/UCViAzz3Qtz8IQdUI9DiJ3WA/featured')
+           else: 
+               st.error('Invalid speaker. Please try again!')
 
-            else:
-               st.error('Incorrect password. Please try again!')
-
-
-            with st.sidebar:  
-
-                    st.sidebar.subheader("Voice labels name")
-                    col1, col2, col3, col4 = st.columns(4)
-                    with col1:
-                        st.markdown("Ân - 1")
-                    with col2:
-                        st.markdown("Kha - 2")             
-                    with col3:
-                        st.markdown("Tân - 3")                
-                    with col4:
-                        st.markdown("Phú - 4")
-                    st.write(labels)
-
-                    st.write('#')    
-
-                    st.sidebar.subheader("Distance to each labels")
-                    st.write(distances)
-
-                    st.write('#')    
-
-                    st.sidebar.subheader("Recorded audio file")
-                    file_details = {"Filename": uploaded_file.name, "FileSize": uploaded_file.size}
-                    st.sidebar.write(file_details)
-
-            del(uploaded_file)
-            os.remove(path)
+        else:
+           st.error('Incorrect password. Please try again!')
 
 
-            #if os.path.exists("audio"):
-            #     os.remove(uploaded_file.name)	
+        with st.sidebar:  
+
+                st.sidebar.subheader("Voice labels name")
+                col1, col2, col3, col4 = st.columns(4)
+                with col1:
+                    st.markdown("Ân - 1")
+                with col2:
+                    st.markdown("Kha - 2")             
+                with col3:
+                    st.markdown("Tân - 3")                
+                with col4:
+                    st.markdown("Phú - 4")
+                st.write(labels)
+
+                st.write('#')    
+
+                st.sidebar.subheader("Distance to each labels")
+                st.write(distances)
+
+                st.write('#')    
+
+                st.sidebar.subheader("Recorded audio file")
+                file_details = {"Filename": uploaded_file.name, "FileSize": uploaded_file.size}
+                st.sidebar.write(file_details)
+
+        del(uploaded_file)
+        os.remove(path)
+
+
+        #if os.path.exists("audio"):
+        #   os.remove(uploaded_file.name)	
                 
     if st.button("Clear All"):
         # Clear values from *all* memoized functions:
