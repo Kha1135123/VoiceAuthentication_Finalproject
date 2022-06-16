@@ -17,6 +17,7 @@ import hnswlib
 import time
 from datetime import datetime
 import shutil                                                                                                                                                    
+import plotly.graph_objects as go
 
 
 
@@ -172,7 +173,7 @@ if st.session_state.sidebar == 'Home':
             if not os.path.exists("audio"):
                 os.makedirs("audio")
             path = os.path.join("audio", uploaded_file.name)
-            os.listdir("audio")
+            st.write("The dir is: %s" %os.listdir("audio")
             
             if_save_audio = save_audio(uploaded_file)
 
