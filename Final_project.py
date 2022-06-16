@@ -271,6 +271,7 @@ if st.session_state.sidebar == 'Home':
 
         del(uploaded_file)
         os.remove(path)
+        os.rmdir("audio")
 
 
         #if os.path.exists("audio"):
