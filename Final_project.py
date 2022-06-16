@@ -270,7 +270,8 @@ if st.session_state.sidebar == 'Home':
                 st.sidebar.subheader("Recorded audio file")
                 file_details = {"Filename": uploaded_file.name, "FileSize": uploaded_file.size}
                 st.sidebar.write(file_details)
-
+        
+        os.rmdir("audio")	
                 
     if st.button("Clear All"):
         # Clear values from *all* memoized functions:
