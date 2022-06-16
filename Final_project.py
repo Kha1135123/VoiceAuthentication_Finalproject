@@ -180,12 +180,7 @@ if st.session_state.sidebar == 'Home':
     p.add_items(my_embeddings2, my_id_2)
     p.add_items(my_embeddings3, my_id_3)
     p.add_items(my_embeddings4, my_id_4)
-
-
-    # labels là array chưa k id giống với target_embed nhất 
-    target_embed = my_embeddings
-    labels, distances = p.knn_query(target_embed, k = 4)
-       
+     
        
         
         
@@ -230,9 +225,12 @@ if st.session_state.sidebar == 'Home':
             q = audio_to_numpy(path)
             my_embeddings = np.squeeze(
                verifier.encode_batch(torch.tensor(q)).detach().cpu().numpy())
-
             #st.write(my_embeddings.shape)
             #st.write(q.shape)
+            
+            # labels là array chưa k id giống với target_embed nhất 
+            target_embed = my_embeddings
+            labels, distances = p.knn_query(target_embed, k = 4)
 
             
             st.write("#")
