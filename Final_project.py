@@ -172,21 +172,21 @@ if st.session_state.sidebar == 'Home':
     my_id_4 = 4
 
 
-     p = hnswlib.Index(space = 'cosine', dim = 192)
-     p.init_index(max_elements = 1000, ef_construction = 200, M = 16)
-     # my_embedding là embedding voice
-     # my_id là id trong database
-     p.add_items(my_embeddings1, my_id_1)
-     p.add_items(my_embeddings2, my_id_2)
-     p.add_items(my_embeddings3, my_id_3)
-     p.add_items(my_embeddings4, my_id_4)
+    p = hnswlib.Index(space = 'cosine', dim = 192)
+    p.init_index(max_elements = 1000, ef_construction = 200, M = 16)
+    # my_embedding là embedding voice
+    # my_id là id trong database
+    p.add_items(my_embeddings1, my_id_1)
+    p.add_items(my_embeddings2, my_id_2)
+    p.add_items(my_embeddings3, my_id_3)
+    p.add_items(my_embeddings4, my_id_4)
 
 
-     # labels là array chưa k id giống với target_embed nhất 
-     target_embed = my_embeddings
-     labels, distances = p.knn_query(target_embed, k = 4)
-        
-        
+    # labels là array chưa k id giống với target_embed nhất 
+    target_embed = my_embeddings
+    labels, distances = p.knn_query(target_embed, k = 4)
+       
+       
         
         
     ### UPLOAD RECORDED AUDIO
