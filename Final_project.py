@@ -18,7 +18,6 @@ import time
 from datetime import datetime
 import shutil                                                                                                                                                    
 
-st.write(st.config.get_option("server.enableCORS"))
 
 
 ## DESIGN implement changes to the standard streamlit UI/UX
