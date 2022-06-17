@@ -180,7 +180,7 @@ if st.session_state.sidebar == 'Home':
                 st.write(file)
             if_save_audio = save_audio(uploaded_file)
           
-        with st.spinner('Predicting...')
+        with st.spinner('Predicting...'):
             spoken = asr_model.transcribe_file(path)           
             st.write('You said:')
             st.info(spoken)
