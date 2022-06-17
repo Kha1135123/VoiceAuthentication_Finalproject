@@ -168,8 +168,9 @@ if st.session_state.sidebar == 'Home':
                                                             savedir="pretrained_models/asr-transformer-transformerlm-librispeech",  
                                                             run_opts={"device":"cpu"})
 
-            st.write("#")
+        st.write("#")
 
+        with st.spinner('Saving audio...'):
             if not os.path.exists("audio"):
                 os.makedirs("audio")
             path = os.path.join("audio", uploaded_file.name)
@@ -178,7 +179,8 @@ if st.session_state.sidebar == 'Home':
             for file in dirs:
                 st.write(file)
             if_save_audio = save_audio(uploaded_file)
-            
+          
+        with st.spinner('Predicting...')
             spoken = asr_model.transcribe_file(path)           
             st.write('You said:')
             st.info(spoken)
