@@ -79,10 +79,6 @@ def save_audio(file):
     return 0
 
 
-def EncoderDecoderASR():
-     asr_model = EncoderDecoderASR.from_hparams(source="speechbrain/asr-transformer-transformerlm-librispeech",  
-                                                run_opts={"device":"cpu"})
-     return asr_model
 
 
 
@@ -168,8 +164,8 @@ if st.session_state.sidebar == 'Home':
         
         ### SPEECH_TO_TEXT
         ## Upload pretrained model
-        #asr_model = EncoderDecoderASR.from_hparams(source="speechbrain/asr-transformer-transformerlm-librispeech",  
-        #                                                    run_opts={"device":"cpu"})
+        asr_model = EncoderDecoderASR.from_hparams(source="speechbrain/asr-transformer-transformerlm-librispeech",  
+                                                            run_opts={"device":"cpu"})
 
         st.write("#")
 
@@ -178,13 +174,11 @@ if st.session_state.sidebar == 'Home':
         path = os.path.join("audio", uploaded_file.name)
             
         dirs = os.listdir("audio")
-        for file in dirs:
-            st.write(file)
         if_save_audio = save_audio(uploaded_file)
           
         with st.spinner('Predicting...'):
             #spoken = asr_model.transcribe_file(path)  
-            spoken = EncoderDecoderASR.transcribe_file(path)
+            spoken = asr_model.transcribe_file(path)
             st.write('You said:')
             st.info(spoken)
 
