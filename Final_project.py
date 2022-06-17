@@ -164,8 +164,7 @@ if st.session_state.sidebar == 'Home':
         with st.spinner('Processing...'):
             ### SPEECH_TO_TEXT
             ## Upload pretrained model
-            asr_model = EncoderDecoderASR.from_hparams(source="speechbrain/asr-transformer-transformerlm-librispeech", 
-                                                            savedir="pretrained_models/asr-transformer-transformerlm-librispeech",  
+            asr_model = EncoderDecoderASR.from_hparams(source="speechbrain/asr-transformer-transformerlm-librispeech",  
                                                             run_opts={"device":"cpu"})
 
         st.write("#")
