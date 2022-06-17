@@ -155,11 +155,11 @@ if st.session_state.sidebar == 'Home':
 
     if submitted and uploaded_file is not None:
         # do stuff with your uploaded file
-        if os.path.exists("audio"):
-            try:
-                shutil.rmtree("audio")
-            except OSError as e:
-                st.write("Error: %s - %s." % (e.filename, e.strerror))
+        #if os.path.exists("audio"):
+        #    try:
+        #        shutil.rmtree("audio")
+        #    except OSError as e:
+        #        st.write("Error: %s - %s." % (e.filename, e.strerror))
         
         with st.spinner('Processing...'):
             ### SPEECH_TO_TEXT
@@ -181,7 +181,7 @@ if st.session_state.sidebar == 'Home':
             if_save_audio = save_audio(uploaded_file)
           
         with st.spinner('Predicting...'):
-            spoken = asr_model.transcribe_file(path)           
+            spoken = asr_model.transcribe_file(if_save_audio)           
             st.write('You said:')
             st.info(spoken)
 
@@ -312,11 +312,11 @@ if st.session_state.sidebar == 'Home':
 
         del(uploaded_file)
         os.remove(path)
-        #os.rmdir("audio")
-        #try:
-        #    shutil.rmtree("audio")
-        #except OSError as e:
-        #    st.write("Error: %s - %s." % (e.filename, e.strerror))
+        os.rmdir("audio")
+        try:
+            shutil.rmtree("audio")
+        except OSError as e:
+            st.write("Error: %s - %s." % (e.filename, e.strerror))
 
 
         #if os.path.exists("audio"):
