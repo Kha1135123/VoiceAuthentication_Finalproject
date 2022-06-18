@@ -28,7 +28,7 @@ pinned: false
 - As digital technology advanced in today's world, the potential of privacy violation has been a threat to user's information
 - Thus, this AI application is designed to be capable of verifying user's identity, based on the voice characteristics such as tones, features, and at the same time integrating with voice password authentication
 - The overall methods are to apply an Automatic Speech Recognition (ASR) pretrained model to translate speech to text, and using cosine similarity based on the user's embeddings extracted from the audio via ECAPA-TDNN model to identify voices. 
-- Link to [presentation slide](https://hackmd.io/@Kha/ry3VnpVK9#/)
+
 ## Content
 ### Data used in pretrained model
 - Speech Recognition: [CommonVoice_En](https://commonvoice.mozilla.org/en/datasets)
