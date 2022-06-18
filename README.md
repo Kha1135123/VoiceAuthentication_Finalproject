@@ -52,9 +52,9 @@ Hours of audio and video: 2,000 +
 ### Code and Presentation
 - [Presentation slide](https://hackmd.io/@Kha/ry3VnpVK9#/)
 - Codes: 
-	- [Speech Recognition](https://github.com/Kha1135123/Final-Project/blob/main/create_user_features.py): transcribe speech to text
-	- [Speaker Verification](https://github.com/Kha1135123/Final-Project/blob/main/create_recsys.py): Calculate the nearest cosine distance of the speaker's embedding vector to the target vector
-	- [Streamlit app](https://github.com/Kha1135123/FoodRecommenderSystem_FinalProject/blob/main/FinalProject.ipynb): A Py file used to run the web.
+	- [Speech Recognition](https://github.com/Kha1135123/VoiceAuthentication_Finalproject/blob/master/Final_project.py): transcribe speech to text
+	- [Speaker Verification](https://github.com/Kha1135123/VoiceAuthentication_Finalproject/blob/master/Final_project.py): Calculate the nearest cosine distance of the speaker's embedding vector to the target vector
+	- [Streamlit app](https://share.streamlit.io/kha1135123/voiceauthentication_finalproject/Final_project.py): A website of the application
 	
 ### Note: 
 - **Reference**:
