@@ -55,6 +55,7 @@ Hours of audio and video: 2,000 +
 	- [Speech Recognition](https://github.com/Kha1135123/VoiceAuthentication_Finalproject/blob/master/Final_project.py): transcribe speech to text
 	- [Speaker Verification](https://github.com/Kha1135123/VoiceAuthentication_Finalproject/blob/master/Final_project.py): Calculate the nearest cosine distance of the speaker's embedding vector to the target vector
 	- [Streamlit app](https://share.streamlit.io/kha1135123/voiceauthentication_finalproject/Final_project.py): A website of the application
+	- [Colab notebook](https://colab.research.google.com/drive/1uFdeMSDSDskEbmjGeldM1qVgpD6FsdFd?hl=vi&fbclid=IwAR0Wsj_-tFxCIA2lLQDjz1_5Lls0wGF2AkK7zoBca3ZzuEz7RpEY1M5zpoY#scrollTo=ouLK513yoYK1): demo on Streamlit
 	
 ### Note: 
 - **Reference**:
