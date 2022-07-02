@@ -5,3 +5,4 @@ torch
 speechbrain
 hnswlib
 plotly
+cffi
