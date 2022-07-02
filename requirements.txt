@@ -5,3 +5,4 @@ torch
 speechbrain
 hnswlib
 plotly
+cffi==1.5.2
