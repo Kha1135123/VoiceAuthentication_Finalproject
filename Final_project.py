@@ -16,7 +16,6 @@ import soundfile
 import hnswlib
 import time
 from datetime import datetime
-import shutil                                                                                                                                                    
 import plotly.graph_objects as go
 
 
