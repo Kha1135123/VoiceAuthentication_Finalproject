@@ -161,7 +161,7 @@ if st.session_state.sidebar == 'Home':
         #        shutil.rmtree("audio")
         #    except OSError as e:
         #        st.write("Error: %s - %s." % (e.filename, e.strerror))
-        
+        st.write(file.size)
         ### SPEECH_TO_TEXT
         ## Upload pretrained model
         asr_model = EncoderDecoderASR.from_hparams(source="speechbrain/asr-transformer-transformerlm-librispeech",  
