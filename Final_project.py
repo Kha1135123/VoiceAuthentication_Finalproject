@@ -43,9 +43,9 @@ textColor = "#5D6169" # grey
 
 
 def audio_to_numpy(filenames):
-    x, sr = librosa.load(filenames, sr=30000)
-    if x.shape[0] <= 30000:    
-        x = np.pad(x, (0, 30000-x.shape[0]), 'constant', constant_values=(0, 0))
+    x, sr = librosa.load(filenames, sr=60000)
+    if x.shape[0] <= 60000:    
+        x = np.pad(x, (0, 60000-x.shape[0]), 'constant', constant_values=(0, 0))
         if len(q.shape) == 1:
             x = x[..., None]
     return x       
