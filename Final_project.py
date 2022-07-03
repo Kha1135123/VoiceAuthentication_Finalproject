@@ -241,7 +241,7 @@ if st.session_state.sidebar == 'Home':
 
         if spoken == 'TWO SIX ZERO SIX':  
            st.success('Password Correct')
-           if labels[0][0] == 2 and distances[0][0] <0.49:          
+           if labels[0][0] == 2 and distances[0][0] <0.11:          
                st.balloons()
                st.snow()
                st.write('Welcome to my Youtube channel. Please click the following link: https://www.youtube.com/channel/UCViAzz3Qtz8IQdUI9DiJ3WA/featured')
