@@ -85,4 +85,5 @@ $ git clone https://github.com/Kha1135123/VoiceAuthentication_Finalproject
 ### Contributor
 - Nguyen Manh Kha - Class of 2022 - Le Hong Phong High School for the Gifted,
   Ho Chi Minh City, Vietnam.
+- Tran Thien Phu - Class of 2022 - Le Hong Phong High School for the Gifted, Ho Chi Minh City, Vietnam
 
